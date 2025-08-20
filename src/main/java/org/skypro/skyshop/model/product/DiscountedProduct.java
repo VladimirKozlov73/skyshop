@@ -1,0 +1,36 @@
+package org.skypro.skyshop.model.product;
+
+import java.util.UUID;
+
+public class DiscountedProduct extends Product{
+
+    protected int basePrice;
+    protected int discount;
+
+    public DiscountedProduct(UUID id, String name, int basePrice, int discount) {
+        super(id, name);
+        if (basePrice <= 0) {
+            throw new IllegalArgumentException("Цена на продукт со скидкой не может быть равна или менее нуля.");
+        }
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Скидка на продукт не может быть меньше нуля или больше 100%.");
+        }
+        this.basePrice = basePrice;
+        this.discount = discount;
+    }
+
+    @Override
+    public int getPrice() {
+        return (int) Math.round(basePrice * (1 - discount / 100.0));
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + getPrice() + " (" + discount + "%)";
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+}
