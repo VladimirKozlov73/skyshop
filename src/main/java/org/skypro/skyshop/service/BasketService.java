@@ -35,7 +35,7 @@ public class BasketService {
         List<BasketItem> basketItems = productsInBasket.entrySet().stream()
                 .map(entry -> {
                     Product product = storageService.getProductById(entry.getKey())
-                            .orElseThrow(() -> new IllegalArgumentException("Продукт с id " + entry.getKey()
+                            .orElseThrow(() -> new NoSuchProductException("Продукт с id " + entry.getKey()
                                     + " не найден."));
                     return new BasketItem(product, entry.getValue());
                 })
